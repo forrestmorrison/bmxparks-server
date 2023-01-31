@@ -1,5 +1,7 @@
 const express = require("express")
-const router = express.Router()
+const parksRouter = express.Router()
 const parksController = require("../controllers/parks")
 
-module.exports = router
+router.getParks("./parks", parksController.listParks)
+
+module.exports = parksRouter

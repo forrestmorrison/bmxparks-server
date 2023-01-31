@@ -1,6 +1,7 @@
 const parks = require("../data/parks")
 
-const listParks = () => {
+const listParks = (req, res) => {
+    res.json(parks)
 }
 
 const showPark = () => {
