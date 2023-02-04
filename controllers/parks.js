@@ -14,8 +14,8 @@ const showPark = (req, res) => {
   }
 
 const fetchParkById = (id, res) => {
-    let sql = "SELECT * FROM posts WHERE id = ?"
-    // WHAT GOES IN THE BRACKETS
+    let sql = "SELECT * FROM parks WHERE id = ?"
+
     sql = mysql.format(sql, [id])
   
     pool.query(sql, (err, rows) => {
@@ -28,8 +28,8 @@ const fetchParkById = (id, res) => {
   const createPark = (req, res) => {
     const { name, address, type, access } = req.body;
     
-    // INSERT INTO POSTS
-    let sql = "INSERT INTO posts (name, address, type, access) VALUES (?,?,?, ?)"
+    let sql = "INSERT INTO parks (name, address, type, access) VALUES (?,?,?,?)"
+
     sql = mysql.format(sql, [name, address, type, access])
 
     pool.query(sql, (err, results) => {
