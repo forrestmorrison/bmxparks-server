@@ -2,7 +2,7 @@ const mysql = require("mysql")
 const pool = require("../sql/connection")
 const { handleSQLError } = require("../sql/error")
 
-const listParks = (req, res) => {
+const getAllParks = (req, res) => {
     pool.query("SELLECT * FROM parks", (err, rows) => {
         if(err) return handleSQLError(res, err)
         return res.json(rows)
@@ -10,27 +10,37 @@ const listParks = (req, res) => {
 }
 
 const showPark = (req, res) => {
-    let sql = "SELECT * FROM users WHERE id = 1"
+    fetchParkById(req.params.id, res)
+  }
 
-    sql = mysql.format(sql, [req.params.id])
-
+const fetchParkById = (id, res) => {
+    let sql = "SELECT * FROM posts WHERE id = ?"
+    // WHAT GOES IN THE BRACKETS
+    sql = mysql.format(sql, [id])
+  
     pool.query(sql, (err, rows) => {
+      if (err) return handleSQLError(res, err)
+      res.json(rows[0]);
+    })
+  }
+
+
+  const createPark = (req, res) => {
+    const { name, address, type, access } = req.body;
+    
+    // INSERT INTO POSTS
+    let sql = "INSERT INTO posts (name, address, type, access) VALUES (?,?,?, ?)"
+    sql = mysql.format(sql, [name, address, type, access])
+
+    pool.query(sql, (err, results) => {
+        console.log('results', results)
         if (err) return handleSQLError(res, err)
-        res.json(rows)
+        return fetchParkById(results.insertId, res)
     })
 }
 
-const createPark = () => {
-
-}
-
-const deletePark = () => {
-
-}
-
 module.exports = {
-    listParks,
+    getAllParks,
     showPark,
     createPark,
-    deletePark
 }
