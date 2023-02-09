@@ -8,11 +8,11 @@ const { handleSQLError } = require('../sql/error')
 const saltRounds = 10
 
 const signup = (req, res) => {
-  const { email, name, password } = req.body
-  let sql = "INSERT INTO users (email, name, password) VALUES (?, ?, ?)"
+  const { email, username, password } = req.body
+  let sql = "INSERT INTO users (email, username, password) VALUES (?, ?, ?)"
 
   bcrypt.hash(password, saltRounds, function(err, hash) {
-    sql = mysql.format(sql, [ email, hash, name ])
+    sql = mysql.format(sql, [ email, username, hash ])
   
     pool.query(sql, (err, result) => {
       console.log('result', result)
