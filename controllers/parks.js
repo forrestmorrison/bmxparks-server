@@ -32,10 +32,13 @@ const fetchParkById = (id, res) => {
 
     sql = mysql.format(sql, [name, address, type, access])
 
-    pool.query(sql, (err, results) => {
-        console.log('results', results)
-        if (err) return handleSQLError(res, err)
-        return fetchParkById(results.insertId, res)
+    pool.query(sql, (err, result) => {
+        console.log('results', result)
+        if (err) {
+          if (err.code === 'ER_DUP_ENTRY') return res.status(409).send('park already exists')
+          return handleSQLError(res, err)
+        }
+        return fetchParkById(result.insertId, res)
     })
 }
 
