@@ -3,7 +3,7 @@ const pool = require("../sql/connection")
 const { handleSQLError } = require("../sql/error")
 
 const getAllParks = (req, res) => {
-    pool.query("SELLECT * FROM parks", (err, rows) => {
+    pool.query("SELECT * FROM parks ORDER BY name ASC", (err, rows) => {
         if(err) return handleSQLError(res, err)
         return res.json(rows)
     })
@@ -26,11 +26,11 @@ const fetchParkById = (id, res) => {
 
 
   const createPark = (req, res) => {
-    const { name, address, type, access } = req.body;
+    const { name, address, type, access, user_id } = req.body;
     
-    let sql = "INSERT INTO parks (name, address, type, access) VALUES (?,?,?,?)"
+    let sql = "INSERT INTO parks (name, address, park_type, access, user_id) VALUES (?,?,?,?,?)"
 
-    sql = mysql.format(sql, [name, address, type, access])
+    sql = mysql.format(sql, [name, address, type, access, user_id])
 
     pool.query(sql, (err, result) => {
         console.log('results', result)
@@ -42,8 +42,20 @@ const fetchParkById = (id, res) => {
     })
 }
 
+const deleteParkById = (req, res) => {
+  let sql = "DELETE * FROM parks WHERE id = req.params._id"
+
+  sql = mysql.format(sql, [req.params._id])
+
+  pool.query(sql, (err, results) => {
+    if (err) return handleSQLError(res, err)
+    res.json({ message: `Deleted ${results.affectedRows} user(s)` });
+  })
+}
+
 module.exports = {
     getAllParks,
     showPark,
     createPark,
+    deleteParkById
 }

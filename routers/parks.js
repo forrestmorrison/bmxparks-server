@@ -6,4 +6,6 @@ router.get("/", parksController.getAllParks)
 
 router.post("/", parksController.createPark)
 
+router.delete("/", parksController.deleteParkById)
+
 module.exports = router
