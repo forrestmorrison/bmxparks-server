@@ -43,9 +43,9 @@ const fetchParkById = (id, res) => {
 }
 
 const deleteParkById = (req, res) => {
-  let sql = "DELETE * FROM parks WHERE id = req.params._id"
+  let sql = "DELETE * FROM parks WHERE id = ?"
 
-  sql = mysql.format(sql, [req.params._id])
+  sql = mysql.format(sql, [id])
 
   pool.query(sql, (err, results) => {
     if (err) return handleSQLError(res, err)
