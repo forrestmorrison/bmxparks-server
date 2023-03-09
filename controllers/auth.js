@@ -41,7 +41,7 @@ const loginUser = (email, password, res) => {
         const data = { ...rows[0] }
         data.password = 'REDACTED'
 
-        const token = jwt.sign(data, 'secret')
+        const token = jwt.sign(data, process.env.JWT_SECRET)
         res.json({
           msg: 'Login successful',
           token,
@@ -57,6 +57,7 @@ const login = (req, res) => {
 }
 
 const checkUser = (req, res)  => {
+  // todo -- fetch the user using the user id in the jwt
   res.send(req.user)
 }
 
