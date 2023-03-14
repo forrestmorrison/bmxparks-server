@@ -56,6 +56,10 @@ const login = (req, res) => {
   loginUser(email, password, res)
 }
 
+const logout = (req, res) => {
+  res.json({})
+}
+
 const checkUser = (req, res)  => {
   // todo -- fetch the user using the user id in the jwt
   res.send(req.user)
@@ -64,5 +68,6 @@ const checkUser = (req, res)  => {
 module.exports = {
   signup,
   login,
+  logout,
   checkUser
 }
