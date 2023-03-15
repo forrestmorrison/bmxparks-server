@@ -26,11 +26,11 @@ const fetchReviewById = (id, res) => {
 
 
   const createReview = (req, res) => {
-    const { comment, rating, user_id } = req.body;
+    const { comment, rating, user_id, park_id } = req.body;
     
-    let sql = "INSERT INTO parks (comment, rating, user_id) VALUES (?,?,?)"
+    let sql = "INSERT INTO reviews (comment, rating, user_id, park_id) VALUES (?,?,?,?)"
 
-    sql = mysql.format(sql, [comment, rating, user_id])
+    sql = mysql.format(sql, [comment, rating, user_id, park_id])
 
     pool.query(sql, (err, result) => {
         console.log('results', result)
