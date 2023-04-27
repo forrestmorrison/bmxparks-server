@@ -26,11 +26,11 @@ const fetchParkById = (id, res) => {
 
 
   const createPark = (req, res) => {
-    const { name, address, type, access, user_id } = req.body;
+    const { name, address, city, state, zip, type, access, user_id } = req.body;
     
-    let sql = "INSERT INTO parks (name, address, park_type, access, user_id) VALUES (?,?,?,?,?)"
+    let sql = "INSERT INTO parks (name, address, city, state, zip, park_type, access, user_id) VALUES (?,?,?,?,?,?,?,?)"
 
-    sql = mysql.format(sql, [name, address, type, access, user_id])
+    sql = mysql.format(sql, [name, address, city, state, zip, type, access, user_id])
 
     pool.query(sql, (err, result) => {
         console.log('results', result)
