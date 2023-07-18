@@ -12,3 +12,7 @@ const fetchWeather = async (searchText) => {
         return { Error: err.stack};
     }
 }
+
+module.exports = {
+    fetchWeather
+}
