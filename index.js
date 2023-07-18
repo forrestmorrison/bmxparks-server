@@ -9,14 +9,17 @@ const authRouter = require('./routers/auth');
 // const cors = require("cors")
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
+require("dotenv").config()
+const cors = require("cors")
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/parks', parksRouter)
 app.use('/reviews', reviewsRouter)
 app.use('/auth', authRouter)
 
-// app.use(cors())
+app.use(cors())
 
 app.listen(port, () => {
     console.log(`Web server is listening on port ${port}`)
